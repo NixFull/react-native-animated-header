@@ -101,6 +101,17 @@ export default class Header extends React.PureComponent {
       : 0;
   };
 
+  _getIconOpacity = () => {
+    const { scrollOffset } = this.state;
+    return this.props.icon
+      ? scrollOffset.interpolate({
+          inputRange: [0, this.headerHeight - toolbarHeight],
+          outputRange: [1, 0],
+          extrapolate: "clamp",
+        })
+      : 0;
+  };
+
   _getImageOpacity = () => {
     const { scrollOffset } = this.state;
     return this.props.imageSource
@@ -216,14 +227,15 @@ export default class Header extends React.PureComponent {
             style={[
               {
                 position: "absolute",
-                left: 60,
-                right: 60,
-                top: 60,
-                bottom: 60,
+                left: 50,
+                right: 50,
+                top: 50,
+                bottom: 50,
                 fontSize,
                 justifyContent: "center",
                 alignItems: "center",
                 flexwrap: "wrap",
+                opacity: this._getIconOpacity(),
               },
               this._getImageScaleStyle(),
             ]}
